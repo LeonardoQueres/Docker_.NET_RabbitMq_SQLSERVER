@@ -1,0 +1,12 @@
+PUT http://localhost:5033/api/Restaurante
+Content-Type: application/json
+  {
+    "id": "5ac7e5f8-7a84-4480-9a42-601448c16b66",
+    "nome": "teste 11111222 1",
+    "endereco": "rua testada 11222221",
+    "site": "teste12222111.com.br"
+  }
+
+###
+
+GET http://localhost:5033/api/Restaurante

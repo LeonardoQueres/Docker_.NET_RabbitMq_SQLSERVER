@@ -1,0 +1,83 @@
+version: '3.4'
+services:
+  restaurante_api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=4000
+      - ASPNETCORE_HTTPS_PORTS=4001
+    container_name: restaurante_api
+    hostname: restaurante_api
+    image: ${DOCKER_REGISTRY-}restauranteapi
+    build:
+      context: .
+      dockerfile: Restaurante_Api/Dockerfile
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    links:
+      - itemservice_api
+    external_links:
+      - itemservice_api
+    networks:
+      restaurante-bridge:
+    depends_on:
+      itemservice_api:
+        condition: service_started
+      sqlserver:
+        condition: service_healthy
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-preview-ubuntu-22.04
+    container_name: sqlserver   
+    hostname: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=leoQueres123
+      - ACCEPT_EULA= Y       
+    volumes:
+      - ${APPDATA}/sqlserverrestaurante/data:/var/opt/mssql/data
+      - ${APPDATA}/sqlserverrestaurante/log:/var/opt/mssql/log   
+    networks:
+      - restaurante-bridge
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "leoQueres123" -Q "SELECT 1" -b -o /dev/null
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s 
+  
+  itemservice_api: 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ASPNETCORE_HTTPS_PORTS=5001
+    container_name: itemservice_api
+    hostname: itemservice_api
+    image: ${DOCKER_REGISTRY-}itemserviceapi
+    build:
+      context: .
+      dockerfile: ItemService_Api/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    external_links:
+      - itemservice_api
+    networks:
+      restaurante-bridge:
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+
+networks:
+  restaurante-bridge:    
+    driver: bridge
+    external: true
+
