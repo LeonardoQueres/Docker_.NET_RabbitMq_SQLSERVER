@@ -3,6 +3,8 @@ using Restaurante_Api.Configurations;
 using Restaurante_Api.Extensions;
 using Restaurante_Api.Middlewares;
 using Restaurante_Repositories.DataContext;
+using System.Net;
+using System.Net.Security;
 using System.Text.Json.Serialization;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
@@ -35,7 +37,6 @@ builder.Services.AddUseCases();
 builder.Services.AddRepositories();
 builder.Services.AddHttpClientBuilder();
 builder.Services.AddScoped<IActionResultConverter, ActionResultConverter>();
-
 
 builder.Services.AddHttpsRedirection(options =>
 {

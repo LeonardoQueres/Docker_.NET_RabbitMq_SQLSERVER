@@ -4,7 +4,7 @@
 ### Project Description
 - Application created to demonstrate the knowledge acquired in the course `Deepen in .NET with Microservices Architecture and RabbitMQ`.
 - The docker-compose file was configured to download the SQL Server image, configure and create the containers and images. 
-- The main application runs on port 4001 - `https://localhost:3001/swagger/index.html`
+- The main application runs on port 4001 - `https://localhost:4001/swagger/index.html`
 - The secondary application runs on port 5001 - `https://localhost:5001/swagger/index.html`
 
 ## System Requirements
@@ -42,7 +42,7 @@ Restaurant Solution/
 ### Descrição do Projeto
  - Aplicação criada para demonstrar os conhecimentos adiquiridos no curso `Aprofunde em .NET com Arquitetura de Microsserviços e RabbitMQ`.
  - O arquivo docker-compose foi configurado para baixar a imagem do sql server, configurar e criar os containers e imagens.	
- - A aplicação principal roda na porta 4001 - `https://localhost:3001/swagger/index.html`
+ - A aplicação principal roda na porta 4001 - `https://localhost:4001/swagger/index.html`
  - A aplicação secundaria roda na porta 5001 - `https://localhost:5001/swagger/index.html`
 
 ## Requisitos do Sistema

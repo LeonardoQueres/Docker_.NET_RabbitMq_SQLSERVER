@@ -1,4 +1,3 @@
-version: '3.4'
 services:
   restaurante_api:
     environment:
@@ -7,13 +6,13 @@ services:
       - ASPNETCORE_HTTPS_PORTS=4001
     container_name: restaurante_api
     hostname: restaurante_api
-    image: ${DOCKER_REGISTRY-}restauranteapi
+    image: ${DOCKER_REGISTRY-}restaurante_api
     build:
       context: .
       dockerfile: Restaurante_Api/Dockerfile
     ports:
       - "4000:4000"
-      - "4001:4001"
+      - "4001:4001"      
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -54,15 +53,15 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5000
-      - ASPNETCORE_HTTPS_PORTS=5001
+      - ASPNETCORE_HTTPS_PORTS=5001           
     container_name: itemservice_api
     hostname: itemservice_api
-    image: ${DOCKER_REGISTRY-}itemserviceapi
+    image: ${DOCKER_REGISTRY-}itemservice_api
     build:
       context: .
       dockerfile: ItemService_Api/Dockerfile
     ports:
-      - "5000:5000"
+      - "5000:5000"      
       - "5001:5001"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
